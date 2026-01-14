@@ -13,5 +13,5 @@ const myNationality = "Nepali"
 
 var myName = "Swostik"
 // Not Allowed
-// const myNationality = "Nepali"
-// let myAge = 27
+// let myAge = 26 
+// const myNationality = "Australia"

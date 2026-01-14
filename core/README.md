@@ -4,9 +4,9 @@
 ### Variables
 There are three types of varibles we use in javascript
 ``` js
-    var name = "Swostik"
-    let surname = "Gautam"
-    const placeOfBirth = "Nepal"
+    var myName = "Swostik"
+    let myAge = 27
+    const myNationality = "Nepali"
  ```
  
 1. var
@@ -22,6 +22,6 @@ This is another way to declare a variable in javascript which is once declared t
 // Allowed
 var myName = "Swostik"
 // Not Allowed
-const myNationality = "Nepali"
-let myAge = 27
+let myAge = 26
+const myNationality = "Australian"
 ```
