@@ -1,12 +1,11 @@
 # Javascript from basics to advanced
 
-## Lesson One
 ### Variables
 There are three types of varibles we use in javascript
 ``` js
-    var name = "Swostik"
-    let surname = "Gautam"
-    const placeOfBirth = "Nepal"
+    var myName = "Swostik"
+    let myAge = 27
+    const myNationality = "Nepali"
  ```
  
 1. var
@@ -20,8 +19,35 @@ This is another way to declare a variable in javascript which is once declared t
 
 ``` js 
 // Allowed
-var myName = "Swostik"
+var myName = "Amigo"
 // Not Allowed
-const myNationality = "Nepali"
-let myAge = 27
+let myAge = 26
+const myNationality = "Australian"
+```
+
+### Hoisting
+It is a mechanism in javascript which allows variables and function to be declared after they are used. Only **var** and **function** can be hoisted, **let** and **const** cannot be hoisted.
+
+This Works
+```js
+x = 10
+
+console.log(x)
+
+var x
+
+console.log(sum())
+
+function sum(){ 
+  return 10 + 20
+}
+```
+
+This does not work
+```js
+y = 10
+
+console.log(y)
+
+let y
 ```

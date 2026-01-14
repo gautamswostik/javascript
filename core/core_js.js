@@ -13,5 +13,27 @@ const myNationality = "Nepali"
 
 var myName = "Swostik"
 // Not Allowed
-// const myNationality = "Nepali"
-// let myAge = 27
+// let myAge = 26 
+// const myNationality = "Australia"
+
+// Hoisting
+
+x = 10
+
+console.log(x)
+
+var x
+
+console.log(sum())
+
+function sum(){ 
+  return 10 + 20
+}
+
+y = 10
+
+console.log(y)
+
+let y
+
+
