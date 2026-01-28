@@ -19,6 +19,7 @@ export const ProgressTrackerLoginView = () => {
           setLoadingState(true);
           setTimeout(() => {
             setLoadingState(false);
+            // navigation
           }, 1000);
         }}
       ></ElevatedButton>

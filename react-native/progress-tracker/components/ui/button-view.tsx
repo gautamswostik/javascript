@@ -1,4 +1,5 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import { useRef } from "react";
+import { Pressable, Text, StyleSheet, Animated } from "react-native";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 export const ElevatedButton = ({
@@ -10,10 +11,29 @@ export const ElevatedButton = ({
   onPressed?: () => void;
   style?: ViewStyle;
 }) => {
+  const animation = useRef(new Animated.Value(10)).current;
+
+  const handleButtonPressIn = () => {
+    Animated.spring(animation, {
+      toValue: 0.95,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleButtonPressOut = () => {
+    Animated.spring(animation, { toValue: 1, useNativeDriver: true }).start();
+  };
   return (
-    <Pressable style={[elevatedButtonStyle.button, style]} onPress={onPressed}>
-      <Text style={elevatedButtonStyle.title}>{title}</Text>
-    </Pressable>
+    <Animated.View style={{ transform: [{ scale: animation }] }}>
+      <Pressable
+        style={[elevatedButtonStyle.button, style]}
+        onPress={onPressed}
+        onPressIn={handleButtonPressIn}
+        onPressOut={handleButtonPressOut}
+      >
+        <Text style={elevatedButtonStyle.title}>{title}</Text>
+      </Pressable>
+    </Animated.View>
   );
 };
 
