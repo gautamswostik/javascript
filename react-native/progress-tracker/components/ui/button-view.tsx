@@ -11,7 +11,7 @@ export const ElevatedButton = ({
   onPressed?: () => void;
   style?: ViewStyle;
 }) => {
-  const animation = useRef(new Animated.Value(10)).current;
+  const animation = useRef(new Animated.Value(1)).current;
 
   const handleButtonPressIn = () => {
     Animated.spring(animation, {
