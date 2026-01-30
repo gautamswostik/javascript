@@ -34,7 +34,7 @@ const textInputStyle = StyleSheet.create({
     height: 52,
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "ccc",
+    borderColor: "black",
     padding: 10,
   },
   focused: {
