@@ -3,8 +3,6 @@ import { View, StyleSheet } from "react-native";
 import ProgressTrackerLoginView from "./(auth)/login";
 
 export default function HomeScreen() {
-  const [loading, setLoadingState] = useState(false);
-
   return (
     <View style={homeviewStyles.container}>
       <ProgressTrackerLoginView />
