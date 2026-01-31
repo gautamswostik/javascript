@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import React from "react";
-import { Button } from "react-native";
+import { IosBackView } from "@/components/ui/back-view";
+import { Platform } from "react-native";
 
 export default function AuthLayout() {
   return (
@@ -10,9 +11,7 @@ export default function AuthLayout() {
         name="register"
         options={{
           title: "Register",
-          headerBackVisible: true,
-          headerBackTitle: "Back",
-          headerBackButtonDisplayMode: "minimal",
+          headerLeft: () => (Platform.OS === "ios" ? <IosBackView /> : null),
         }}
       />
     </Stack>
