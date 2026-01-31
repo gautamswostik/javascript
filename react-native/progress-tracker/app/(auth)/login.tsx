@@ -1,13 +1,13 @@
 import { ProgressTrackerTextField } from "@/components/ui/text-view";
 import React, { useState } from "react";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { ElevatedButton } from "@/components/ui/button-view";
 import { ProgressTrackerLoadingView } from "@/components/ui/loading-view";
 import { useRouter } from "expo-router";
 import { Routes } from "@/constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export const ProgressTrackerLoginView = () => {
+export default function ProgressTrackerLoginView() {
   const [loading, setLoadingState] = useState(false);
   const router = useRouter();
 
@@ -23,7 +23,7 @@ export const ProgressTrackerLoginView = () => {
           setLoadingState(true);
           setTimeout(() => {
             setLoadingState(false);
-            router.push(Routes.HOME);
+            router.push("/home");
             // navigation
           }, 1000);
         }}
@@ -31,11 +31,17 @@ export const ProgressTrackerLoginView = () => {
       <RegisterButton />
     </SafeAreaView>
   );
-};
+}
 
 const RegisterButton = () => {
+  const router = useRouter();
   return (
-    <Pressable style={loginViewStyle.regiserTextRow}>
+    <Pressable
+      style={loginViewStyle.regiserTextRow}
+      onPress={() => {
+        router.push("/register");
+      }}
+    >
       <Text style={loginViewStyle.regiserText}>Do not have account ?</Text>
       <Text style={[loginViewStyle.regiserText, loginViewStyle.register]}>
         Register

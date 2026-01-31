@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { ProgressTrackerLoginView } from "./views/auth/login-view";
+import ProgressTrackerLoginView from "./(auth)/login";
 
 export default function HomeScreen() {
   return (
