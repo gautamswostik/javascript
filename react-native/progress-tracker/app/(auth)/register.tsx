@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { ElevatedButton } from "@/components/ui/button-view";
 import { ProgressTrackerLoadingView } from "@/components/ui/loading-view";
+import { Stack } from "expo-router";
 
 export default function ProgressTrackerRegisterView() {
   const [loading, setLoadingState] = useState(false);
 
   return (
     <View style={registerViewStyle.container}>
+      <Stack.Screen options={{ title: "Register" }} />
       {loading ? <ProgressTrackerLoadingView /> : null}
       <ProgressTrackerTextField style={registerViewStyle.input} label="Email" />
       <ProgressTrackerTextField
