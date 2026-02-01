@@ -1,3 +1,4 @@
 export const Routes = {
-  HOME: "/views/home",
+  HOME: "/home",
+  REGISTER: "/register",
 } as const;

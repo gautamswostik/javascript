@@ -23,7 +23,7 @@ export default function ProgressTrackerLoginView() {
           setLoadingState(true);
           setTimeout(() => {
             setLoadingState(false);
-            router.push("/home");
+            router.push(Routes.HOME);
             // navigation
           }, 1000);
         }}
@@ -39,7 +39,7 @@ const RegisterButton = () => {
     <Pressable
       style={loginViewStyle.regiserTextRow}
       onPress={() => {
-        router.push("/register");
+        router.push(Routes.REGISTER);
       }}
     >
       <Text style={loginViewStyle.regiserText}>Do not have account ?</Text>
