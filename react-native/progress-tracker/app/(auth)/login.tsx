@@ -1,4 +1,3 @@
-import { ProgressTrackerTextField } from "@/components/ui/text-view";
 import React, { useState } from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
 import { ElevatedButton } from "@/components/ui/button-view";
@@ -6,6 +5,7 @@ import { ProgressTrackerLoadingView } from "@/components/ui/loading-view";
 import { useRouter } from "expo-router";
 import { Routes } from "@/constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ProgressTrackerTextField } from "@/components/ui/text-view";
 
 export default function ProgressTrackerLoginView() {
   const [loading, setLoadingState] = useState(false);
@@ -14,8 +14,22 @@ export default function ProgressTrackerLoginView() {
   return (
     <SafeAreaView>
       {loading ? <ProgressTrackerLoadingView /> : null}
-      <ProgressTrackerTextField style={loginViewStyle.input} label="Email" />
-      <ProgressTrackerTextField style={loginViewStyle.input} label="Password" />
+      <ProgressTrackerTextField
+        style={loginViewStyle.input}
+        label="Email"
+        keyboardType="email-address"
+        validation={(text) => {
+          if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(text)) {
+            return "Email is invalid";
+          }
+          return "";
+        }}
+      />
+      <ProgressTrackerTextField
+        style={loginViewStyle.input}
+        label="Password"
+        secureTextEntry={true}
+      />
       <ElevatedButton
         title="Login"
         style={loginViewStyle.button}

@@ -1,9 +1,9 @@
-import { ProgressTrackerTextField } from "@/components/ui/text-view";
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { ElevatedButton } from "@/components/ui/button-view";
 import { ProgressTrackerLoadingView } from "@/components/ui/loading-view";
 import { Stack } from "expo-router";
+import { ProgressTrackerTextField } from "@/components/ui/text-view";
 
 export default function ProgressTrackerRegisterView() {
   const [loading, setLoadingState] = useState(false);
@@ -12,10 +12,21 @@ export default function ProgressTrackerRegisterView() {
     <View style={registerViewStyle.container}>
       <Stack.Screen options={{ title: "Register" }} />
       {loading ? <ProgressTrackerLoadingView /> : null}
-      <ProgressTrackerTextField style={registerViewStyle.input} label="Email" />
+      <ProgressTrackerTextField
+        style={registerViewStyle.input}
+        label="Email"
+        keyboardType="email-address"
+        validation={(text) => {
+          if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(text)) {
+            return "Email is invalid";
+          }
+          return "";
+        }}
+      />
       <ProgressTrackerTextField
         style={registerViewStyle.input}
         label="Password"
+        secureTextEntry={true}
       />
       <ElevatedButton
         title="Register"
