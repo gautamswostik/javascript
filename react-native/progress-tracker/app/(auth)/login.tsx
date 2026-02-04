@@ -6,6 +6,7 @@ import { useRouter } from "expo-router";
 import { Routes } from "@/constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressTrackerTextField } from "@/components/ui/text-view";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   validateEmailAddress,
   validatePassword,
@@ -77,28 +78,37 @@ export default function ProgressTrackerLoginView() {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={loginViewStyle.safeArea} edges={[]}>
       {loading ? <ProgressTrackerLoadingView /> : null}
-      <ProgressTrackerTextField
-        style={loginViewStyle.input}
-        label="Email"
-        error={emailError}
-        keyboardType="email-address"
-        onTextChanged={handleEmailChange}
-      />
-      <ProgressTrackerTextField
-        style={loginViewStyle.input}
-        label="Password"
-        error={passwordError}
-        onTextChanged={handlePasswordChange}
-        secureTextEntry={true}
-      />
-      <ElevatedButton
-        title="Login"
-        style={loginViewStyle.button}
-        onPressed={proceedLogin}
-      ></ElevatedButton>
-      <RegisterButton />
+
+      <KeyboardAwareScrollView
+        contentContainerStyle={loginViewStyle.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={loginViewStyle.title}>Welcome Back</Text>
+        <Text style={loginViewStyle.subtitle}>Login to continue</Text>
+        <ProgressTrackerTextField
+          style={loginViewStyle.input}
+          label="Email"
+          error={emailError}
+          keyboardType="email-address"
+          onTextChanged={handleEmailChange}
+        />
+        <ProgressTrackerTextField
+          style={loginViewStyle.input}
+          label="Password"
+          error={passwordError}
+          onTextChanged={handlePasswordChange}
+          secureTextEntry={true}
+        />
+        <ElevatedButton
+          title="Login"
+          style={loginViewStyle.button}
+          onPressed={proceedLogin}
+        ></ElevatedButton>
+        <RegisterButton />
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }
@@ -121,11 +131,12 @@ const RegisterButton = () => {
 };
 
 const loginViewStyle = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   input: {
     marginTop: 10,
-  },
-  backgroundImage: {
-    resizeMode: "contain",
   },
   button: {
     marginTop: 10,
@@ -142,5 +153,20 @@ const loginViewStyle = StyleSheet.create({
     fontWeight: "bold",
     color: "red",
     marginStart: 5,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#333",
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#666",
+    marginBottom: 40,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
   },
 });
