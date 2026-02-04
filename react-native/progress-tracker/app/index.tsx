@@ -1,10 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 import ProgressTrackerLoginView from "./(auth)/login";
 
 export default function HomeScreen() {
   return (
     <View style={homeviewStyles.container}>
+      <StatusBar barStyle={"dark-content"}></StatusBar>
       <ProgressTrackerLoginView />
     </View>
   );
