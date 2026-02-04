@@ -6,10 +6,75 @@ import { useRouter } from "expo-router";
 import { Routes } from "@/constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressTrackerTextField } from "@/components/ui/text-view";
+import {
+  validateEmailAddress,
+  validatePassword,
+} from "@/constants/validations";
 
 export default function ProgressTrackerLoginView() {
   const [loading, setLoadingState] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const router = useRouter();
+
+  const handleEmailChange = (text: string) => {
+    setEmail(text);
+
+    if (text.length === 0) {
+      setEmailError("Email is Required");
+    } else {
+      const error = validateEmailAddress(text);
+      setEmailError(error || "");
+    }
+  };
+
+  const handlePasswordChange = (text: string) => {
+    setPassword(text);
+
+    if (text.length === 0) {
+      setPasswordError("Password is Required");
+    } else {
+      const error = validatePassword(text);
+      setPasswordError(error || "");
+    }
+  };
+
+  const proceedLogin = () => {
+    if (email.length === 0) {
+      setEmailError("Email is Required");
+      setPasswordError("");
+      return;
+    }
+
+    const emailErr = validateEmailAddress(email);
+    if (emailErr) {
+      setEmailError(emailErr);
+      setPasswordError("");
+      return;
+    }
+    setEmailError("");
+
+    if (password.length === 0) {
+      setPasswordError("Password is Required");
+      return;
+    }
+
+    const passwordErr = validatePassword(password);
+    if (passwordErr) {
+      setPasswordError(passwordErr);
+      return;
+    }
+    setPasswordError("");
+
+    setLoadingState(true);
+    setTimeout(() => {
+      setLoadingState(false);
+      router.push(Routes.HOME);
+    }, 1000);
+  };
 
   return (
     <SafeAreaView>
@@ -17,30 +82,21 @@ export default function ProgressTrackerLoginView() {
       <ProgressTrackerTextField
         style={loginViewStyle.input}
         label="Email"
+        error={emailError}
         keyboardType="email-address"
-        validation={(text) => {
-          if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(text)) {
-            return "Email is invalid";
-          }
-          return "";
-        }}
+        onTextChanged={handleEmailChange}
       />
       <ProgressTrackerTextField
         style={loginViewStyle.input}
         label="Password"
+        error={passwordError}
+        onTextChanged={handlePasswordChange}
         secureTextEntry={true}
       />
       <ElevatedButton
         title="Login"
         style={loginViewStyle.button}
-        onPressed={() => {
-          setLoadingState(true);
-          setTimeout(() => {
-            setLoadingState(false);
-            router.push(Routes.HOME);
-            // navigation
-          }, 1000);
-        }}
+        onPressed={proceedLogin}
       ></ElevatedButton>
       <RegisterButton />
     </SafeAreaView>

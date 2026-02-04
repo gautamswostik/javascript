@@ -16,17 +16,20 @@ export default function ProgressTrackerRegisterView() {
         style={registerViewStyle.input}
         label="Email"
         keyboardType="email-address"
-        validation={(text) => {
-          if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(text)) {
-            return "Email is invalid";
-          }
-          return "";
-        }}
+        // validation={(text) => {
+        //   if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(text)) {
+        //     return "Email is invalid";
+        //   }
+        //   return "";
+        // }}
       />
       <ProgressTrackerTextField
         style={registerViewStyle.input}
         label="Password"
         secureTextEntry={true}
+        // validation={(text) => {
+
+        // }}
       />
       <ElevatedButton
         title="Register"
