@@ -18,6 +18,7 @@ export default function ProgressTrackerRegisterView() {
         contentContainerStyle={registerViewStyle.scrollview}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
+        extraScrollHeight={20}
       >
         <ProgressTrackerTextField
           style={registerViewStyle.input}
