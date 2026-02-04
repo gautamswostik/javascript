@@ -7,19 +7,18 @@ export const ProgressTrackerTextField = ({
   label,
   keyboardType,
   secureTextEntry,
-  validation,
+  onTextChanged,
+  error,
 }: {
   style?: ViewStyle;
   label?: string;
-  rule?: string | null;
   keyboardType?: "default" | "email-address" | "numeric";
   secureTextEntry?: boolean;
-  errorInfo?: string;
-  validation?: (value: string) => string;
+  error?: string;
+  onTextChanged?: ((text: string) => void) | undefined;
 }) => {
   const [focused, setFocused] = useState(false);
-  const [error, setError] = useState("");
-
+  const hasError = error && error.length > 0;
   return (
     <View style={style}>
       {label != null && label.length > 0 ? (
@@ -32,21 +31,13 @@ export const ProgressTrackerTextField = ({
         style={[
           textInputStyle.input,
           focused && textInputStyle.focused,
-          error.length > 0 && textInputStyle.error,
+          hasError && textInputStyle.error,
         ]}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        onChangeText={(text) => {
-          if (validation) {
-            if (!validation) return;
-            let errorMessage = validation(text);
-            setError(errorMessage);
-          }
-        }}
+        onChangeText={onTextChanged}
       />
-      {error.length > 0 && (
-        <Text style={textInputStyle.errorInfo}>{error}</Text>
-      )}
+      {hasError && <Text style={textInputStyle.errorInfo}>{error}</Text>}
     </View>
   );
 };
@@ -74,6 +65,7 @@ const textInputStyle = StyleSheet.create({
   error: {
     borderColor: "#d32f2f",
     borderWidth: 2,
+    padding: 15,
   },
   errorInfo: {
     color: "#d32f2f",
