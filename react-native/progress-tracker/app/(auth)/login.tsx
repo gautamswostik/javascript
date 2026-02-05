@@ -86,7 +86,7 @@ export default function ProgressTrackerLoginView() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text style={loginViewStyle.title}>Welcome Back</Text>
+        <Text style={loginViewStyle.title}>Welcome</Text>
         <Text style={loginViewStyle.subtitle}>Login to continue</Text>
         <ProgressTrackerTextField
           style={loginViewStyle.input}
