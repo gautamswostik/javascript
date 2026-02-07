@@ -11,6 +11,7 @@ import {
   validateEmailAddress,
   validatePassword,
 } from "@/constants/validations";
+import { TypewriterText } from "@/components/ui/animated-text";
 
 export default function ProgressTrackerLoginView() {
   const [loading, setLoadingState] = useState(false);
@@ -86,8 +87,23 @@ export default function ProgressTrackerLoginView() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <Text style={loginViewStyle.title}>Welcome</Text>
-        <Text style={loginViewStyle.subtitle}>Login to continue</Text>
+        <TypewriterText
+          text="WELCOME"
+          speed={80}
+          enableHaptic={true}
+          hapticStyle="heavy"
+          delay={1}
+          style={loginViewStyle.title}
+        />
+
+        <TypewriterText
+          text="Login to continue"
+          speed={60}
+          delay={1500}
+          enableHaptic={true}
+          hapticStyle="heavy"
+          style={loginViewStyle.subtitle}
+        />
         <ProgressTrackerTextField
           style={loginViewStyle.input}
           label="Email"
@@ -158,7 +174,7 @@ const loginViewStyle = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#333",
+    color: "333",
   },
   subtitle: {
     fontSize: 16,
