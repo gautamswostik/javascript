@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, TextStyle, StyleProp } from "react-native";
+import { Text, TextStyle, StyleProp, Platform } from "react-native";
 import * as Haptics from "expo-haptics";
 
 interface TypewriterTextProps {
@@ -61,6 +61,9 @@ export const TypewriterText = ({
   }, [currentIndex, text, speed, delay, onComplete, enableHaptic, hapticStyle]);
 
   const triggerHaptic = (style: string) => {
+    if (Platform.OS === "android") {
+      return;
+    }
     switch (style) {
       case "light":
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

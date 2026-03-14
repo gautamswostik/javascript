@@ -11,10 +11,11 @@ import {
   validateEmailAddress,
   validatePassword,
 } from "@/constants/validations";
-import { TypewriterText } from "@/components/ui/animated-text";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ProgressTrackerLoginView() {
   const [loading, setLoadingState] = useState(false);
+  const [isDarkMode, setDarkMode] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -81,29 +82,23 @@ export default function ProgressTrackerLoginView() {
   return (
     <SafeAreaView style={loginViewStyle.safeArea} edges={[]}>
       {loading ? <ProgressTrackerLoadingView /> : null}
-
+      <Pressable onPress={() => setDarkMode(!isDarkMode)}>
+        <Ionicons
+          name={isDarkMode ? "sunny-outline" : "moon"}
+          size={32}
+          style={loginViewStyle.icon}
+        />
+      </Pressable>
       <KeyboardAwareScrollView
         contentContainerStyle={loginViewStyle.scrollContent}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <TypewriterText
-          text="WELCOME"
-          speed={80}
-          enableHaptic={true}
-          hapticStyle="heavy"
-          delay={1}
-          style={loginViewStyle.title}
-        />
+        <Ionicons name={"moon"} size={28} color={"#e0e7ff"} />
+        <Text style={loginViewStyle.title}>WELCOME</Text>
 
-        <TypewriterText
-          text="Login to continue"
-          speed={60}
-          delay={1500}
-          enableHaptic={true}
-          hapticStyle="heavy"
-          style={loginViewStyle.subtitle}
-        />
+        <Text style={loginViewStyle.subtitle}>Login to continue</Text>
+
         <ProgressTrackerTextField
           style={loginViewStyle.input}
           label="Email"
@@ -118,6 +113,7 @@ export default function ProgressTrackerLoginView() {
           onTextChanged={handlePasswordChange}
           secureTextEntry={true}
         />
+
         <ElevatedButton
           title="Login"
           style={loginViewStyle.button}
@@ -184,5 +180,10 @@ const loginViewStyle = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: "center",
+  },
+  icon: {
+    alignSelf: "flex-end",
+    paddingTop: 62,
+    color: "black",
   },
 });

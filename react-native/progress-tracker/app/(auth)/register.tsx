@@ -13,10 +13,8 @@ import {
 
 export default function ProgressTrackerRegisterView() {
   const [loading, setLoadingState] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
