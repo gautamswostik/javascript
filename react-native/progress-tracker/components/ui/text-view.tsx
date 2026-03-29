@@ -9,12 +9,14 @@ export const ProgressTrackerTextField = ({
   secureTextEntry,
   onTextChanged,
   error,
+  value,
 }: {
   style?: ViewStyle;
   label?: string;
   keyboardType?: "default" | "email-address" | "numeric";
   secureTextEntry?: boolean;
   error?: string;
+  value?: string;
   onTextChanged?: ((text: string) => void) | undefined;
 }) => {
   const [focused, setFocused] = useState(false);
@@ -28,6 +30,7 @@ export const ProgressTrackerTextField = ({
         autoCapitalize="none"
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
+        value={value}
         style={[
           textInputStyle.input,
           focused && textInputStyle.focused,

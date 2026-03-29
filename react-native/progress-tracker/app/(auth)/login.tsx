@@ -7,76 +7,44 @@ import { Routes } from "@/constants/routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressTrackerTextField } from "@/components/ui/text-view";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  validateEmailAddress,
-  validatePassword,
-} from "@/constants/validations";
 import { TypewriterText } from "@/components/ui/animated-text";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Email is invalid"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+      "Password must contain at least one special character"
+    ),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function ProgressTrackerLoginView() {
   const [loading, setLoadingState] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const router = useRouter();
 
-  const handleEmailChange = (text: string) => {
-    setEmail(text);
+  const { control, handleSubmit } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
 
-    if (text.length === 0) {
-      setEmailError("Email is Required");
-    } else {
-      const error = validateEmailAddress(text);
-      setEmailError(error || "");
-    }
-  };
-
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-
-    if (text.length === 0) {
-      setPasswordError("Password is Required");
-    } else {
-      const error = validatePassword(text);
-      setPasswordError(error || "");
-    }
-  };
-
-  const proceedLogin = () => {
-    if (email.length === 0) {
-      setEmailError("Email is Required");
-      setPasswordError("");
-      return;
-    }
-
-    const emailErr = validateEmailAddress(email);
-    if (emailErr) {
-      setEmailError(emailErr);
-      setPasswordError("");
-      return;
-    }
-    setEmailError("");
-
-    if (password.length === 0) {
-      setPasswordError("Password is Required");
-      return;
-    }
-
-    const passwordErr = validatePassword(password);
-    if (passwordErr) {
-      setPasswordError(passwordErr);
-      return;
-    }
-    setPasswordError("");
-
+  const proceedLogin = handleSubmit(() => {
     setLoadingState(true);
     setTimeout(() => {
       setLoadingState(false);
       router.push(Routes.HOME);
     }, 1000);
-  };
+  });
 
   return (
     <SafeAreaView style={loginViewStyle.safeArea} edges={[]}>
@@ -104,25 +72,42 @@ export default function ProgressTrackerLoginView() {
           hapticStyle="heavy"
           style={loginViewStyle.subtitle}
         />
-        <ProgressTrackerTextField
-          style={loginViewStyle.input}
-          label="Email"
-          error={emailError}
-          keyboardType="email-address"
-          onTextChanged={handleEmailChange}
+
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <ProgressTrackerTextField
+              style={loginViewStyle.input}
+              label="Email"
+              value={value}
+              error={error?.message}
+              keyboardType="email-address"
+              onTextChanged={onChange}
+            />
+          )}
         />
-        <ProgressTrackerTextField
-          style={loginViewStyle.input}
-          label="Password"
-          error={passwordError}
-          onTextChanged={handlePasswordChange}
-          secureTextEntry={true}
+
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <ProgressTrackerTextField
+              style={loginViewStyle.input}
+              label="Password"
+              value={value}
+              error={error?.message}
+              onTextChanged={onChange}
+              secureTextEntry={true}
+            />
+          )}
         />
+
         <ElevatedButton
           title="Login"
           style={loginViewStyle.button}
           onPressed={proceedLogin}
-        ></ElevatedButton>
+        />
         <RegisterButton />
       </KeyboardAwareScrollView>
     </SafeAreaView>
